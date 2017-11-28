@@ -237,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
         return (int) l;
     }
     private void random() {
+
         FirebaseDatabase.getInstance().getReference().child("TypeF").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
