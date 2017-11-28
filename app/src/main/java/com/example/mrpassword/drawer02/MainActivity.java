@@ -1,6 +1,8 @@
 package com.example.mrpassword.drawer02;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -185,6 +193,28 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    public void ShowPopup(View v) {
+        random();
+        myDialog.setContentView(R.layout.popup_food);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("X");
+        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+        TextView txtRandomName = (TextView) myDialog.findViewById(R.id.ranName);
+        ImageView imageView = (ImageView) myDialog.findViewById(R.id.ranImage);
+        TextView textD = (TextView) myDialog.findViewById(R.id.food_dis);
+        txtRandomName.setText(food.getName());
+        Picasso.with(this).load(food.getPic()).into(imageView);
+        textD.setText(food.getFID());
+    }
 
 
 }
