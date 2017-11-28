@@ -44,11 +44,9 @@ public class MainActivity extends AppCompatActivity {
     TypeF typeF = new TypeF();
 
 
-
-
     // Make sure to be using android.support.v7.app.ActionBarDrawerToggle version.
     // The android.support.v4.app.ActionBarDrawerToggle has been deprecated.
-     ActionBarDrawerToggle drawerToggle;
+    ActionBarDrawerToggle drawerToggle;
 
 
     @Override
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mDrawer = findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(MainActivity.this,
-                mDrawer,R.string.drawer_open,R.string.drawer_close);
+                mDrawer, R.string.drawer_open, R.string.drawer_close);
         mDrawer.addDrawerListener(drawerToggle);
         ///////////////////////////////////////////////////
         ///bottom//////////////////////////////////////////
@@ -85,11 +83,12 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             MainContent fragment1 = new MainContent();
             FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction1.replace(R.id.flContent,fragment1,"Fragment");
+            fragmentTransaction1.replace(R.id.flContent, fragment1, "Fragment");
             fragmentTransaction1.commit();
         }
         ///////////////////////////////////////////
     }
+
     ///hamberger///////////////////////////////////////
     @Override
     protected void onPostCreate(@Nullable Bundle saveInstanceState) {
@@ -115,11 +114,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.nav_first_fragment:
                 fragmentClass = FirstFragment.class;
                 break;
@@ -162,8 +162,9 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     //////////////////////////////////////////////////////////////////////////////////////
-    ///POP UP FOOD///////////////////////////////////////////////////////////////////////////////
+    ///BOTTOM CLICK///////////////////////////////////////////////////////////////////////////////
     private BottomNavigationView.OnNavigationItemSelectedListener bnvSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -173,25 +174,25 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.home_bar:
                             MainContent fragment1 = new MainContent();
                             FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction1.replace(R.id.flContent,fragment1,"Fragment");
+                            fragmentTransaction1.replace(R.id.flContent, fragment1, "Fragment");
                             fragmentTransaction1.commit();
                             return true;
                         case R.id.lb_bar:
                             LibaryFragment fragment2 = new LibaryFragment();
                             FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction2.replace(R.id.flContent,fragment2,"Fragment");
+                            fragmentTransaction2.replace(R.id.flContent, fragment2, "Fragment");
                             fragmentTransaction2.commit();
                             return true;
                         case R.id.search_bar:
                             SearchFragment fragment3 = new SearchFragment();
                             FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction3.replace(R.id.flContent,fragment3,"Fragment");
+                            fragmentTransaction3.replace(R.id.flContent, fragment3, "Fragment");
                             fragmentTransaction3.commit();
                             return true;
                         case R.id.acc_bar:
                             AccountFragment fragment4 = new AccountFragment();
                             FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction4.replace(R.id.flContent,fragment4,"Fragment");
+                            fragmentTransaction4.replace(R.id.flContent, fragment4, "Fragment");
                             fragmentTransaction4.commit();
 
                             return true;
@@ -208,7 +209,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
+    // POP UP////////////////////////////////////////////////////////////////////////////////////////////
     public void ShowPopup(View v) {
         random();
         myDialog.setContentView(R.layout.popup_food);
@@ -230,6 +233,8 @@ public class MainActivity extends AppCompatActivity {
         Picasso.with(this).load(food.getPic()).into(imageView);
         textD.setText(food.getFID());
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static int safeLongToInt(long l) {
         if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
             throw new IllegalArgumentException
@@ -237,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return (int) l;
     }
+
     private void random() {
         FirebaseDatabase.getInstance().getReference().child("TypeF").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
