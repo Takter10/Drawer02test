@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     //////////////////////////////////////////////////////////////////////////////////////
+    ///POP UP FOOD///////////////////////////////////////////////////////////////////////////////
     private BottomNavigationView.OnNavigationItemSelectedListener bnvSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -207,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     public void ShowPopup(View v) {
         random();
         myDialog.setContentView(R.layout.popup_food);
@@ -237,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
         return (int) l;
     }
     private void random() {
-
         FirebaseDatabase.getInstance().getReference().child("TypeF").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
