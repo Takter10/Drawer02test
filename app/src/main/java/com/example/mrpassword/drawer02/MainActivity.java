@@ -21,9 +21,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -32,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
     Dialog myDialog;
     TextView txtclose;
     Button btnFollow;
+    String selectchild;
     Food food = new Food();
-
+    TypeF typeF = new TypeF();
 
 
 
@@ -220,6 +228,88 @@ public class MainActivity extends AppCompatActivity {
         txtRandomName.setText(food.getName());
         Picasso.with(this).load(food.getPic()).into(imageView);
         textD.setText(food.getFID());
+    }
+    public static int safeLongToInt(long l) {
+        if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException
+                    (l + " cannot be cast to int without changing its value.");
+        }
+        return (int) l;
+    }
+    private void random() {
+        FirebaseDatabase.getInstance().getReference().child("TypeF").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int childcount = safeLongToInt(dataSnapshot.getChildrenCount());
+//                selectchild = childcount+"";
+                if (childcount == 0) return;
+                Random rand = new Random();
+                int random = rand.nextInt(childcount);
+                selectchild = Integer.toString(random);
+                typeF.setTID(dataSnapshot.child(selectchild).child("TID").getValue().toString());
+//                food.setName(dataSnapshot.child(selectchild).child("TID").getValue().toString());
+                Switch swfd = (Switch) findViewById(R.id.SWFD);
+                Switch swfr = (Switch) findViewById(R.id.SWFR);
+                Switch swfn = (Switch) findViewById(R.id.SWFN);
+                if (swfd.isChecked() && swfn.isChecked() && swfr.isChecked()) {
+                    String[] tmp = {"FD", "FN", "FR"};
+                    Random generator = new Random();
+                    int randomIndex = generator.nextInt(tmp.length);
+                    typeF.setTID(tmp[randomIndex]);
+                } else if (swfd.isChecked() && swfn.isChecked()) {
+                    String[] tmp = {"FD", "FN"};
+                    Random generator = new Random();
+                    int randomIndex = generator.nextInt(tmp.length);
+                    typeF.setTID(tmp[randomIndex]);
+                } else if (swfn.isChecked() && swfr.isChecked()) {
+                    String[] tmp = {"FN", "FR"};
+                    Random generator = new Random();
+                    int randomIndex = generator.nextInt(tmp.length);
+                    typeF.setTID(tmp[randomIndex]);
+                } else if (swfd.isChecked() && swfr.isChecked()) {
+                    String[] tmp = {"FD", "FR"};
+                    Random generator = new Random();
+                    int randomIndex = generator.nextInt(tmp.length);
+                    typeF.setTID(tmp[randomIndex]);
+                } else if (swfn.isChecked()) {
+                    typeF.setTID("FN");
+                } else if (swfr.isChecked()) {
+                    typeF.setTID("FR");
+                } else if (swfd.isChecked()) {
+                    typeF.setTID("FD");
+                }
+                FirebaseDatabase.getInstance().getReference().child("Food").child(typeF.getTID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int childcount = safeLongToInt(dataSnapshot.getChildrenCount());
+//                        selectchild = childcount+"";
+                        if (childcount == 0) return;
+                        Random rand = new Random();
+                        int random = rand.nextInt(childcount);
+                        selectchild = Integer.toString(random + 1);
+                        if (selectchild.length() == 1) {
+                            selectchild = typeF.getTID() + "0" + selectchild;
+                        } else {
+                            selectchild = typeF.getTID() + selectchild;
+                        }
+                        food.setName(dataSnapshot.child(selectchild).child("Name").getValue().toString());
+                        food.setPic(dataSnapshot.child(selectchild).child("Pic").getValue().toString());
+                        food.setFID(dataSnapshot.child(selectchild).child("FID").getValue().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
