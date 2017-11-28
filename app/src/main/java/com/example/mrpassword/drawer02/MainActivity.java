@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // POP UP////////////////////////////////////////////////////////////////////////////////////////////
     public void ShowPopup(View v) {
-//        random();
+        random();
         myDialog.setContentView(R.layout.popup_food);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         txtclose.setText("X");
@@ -229,12 +229,12 @@ public class MainActivity extends AppCompatActivity {
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
 
-//        TextView txtRandomName = (TextView) myDialog.findViewById(R.id.ranName);
-//        ImageView imageView = (ImageView) myDialog.findViewById(R.id.ranImage);
-//        TextView textD = (TextView) myDialog.findViewById(R.id.food_dis);
-//        txtRandomName.setText(food.getName());
-//        Picasso.with(this).load(food.getPic()).into(imageView);
-//        textD.setText(food.getFID());
+        TextView txtRandomName = (TextView) myDialog.findViewById(R.id.ranName);
+        ImageView imageView = (ImageView) myDialog.findViewById(R.id.ranImage);
+        TextView textD = (TextView) myDialog.findViewById(R.id.food_dis);
+        txtRandomName.setText(food.getName());
+        Picasso.with(this).load(food.getPic()).into(imageView);
+        textD.setText(food.getFID());
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
