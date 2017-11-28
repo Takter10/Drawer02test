@@ -1,5 +1,6 @@
 package com.example.mrpassword.drawer02;
 
+import android.app.Dialog;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
+    Dialog myDialog;
+    TextView txtclose;
+    Button btnFollow;
+    Food food = new Food();
+
 
 
 
